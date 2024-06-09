@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: satisfying
+  datasource:
+    url: jdbc:postgresql://localhost:5432/satisfyingDB
+    username: dekan
+    password: s3cret
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
