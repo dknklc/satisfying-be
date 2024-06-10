@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Set;
 
@@ -29,16 +28,17 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
-//    private boolean accountNonExpired;
-//    private boolean isEnabled;
-//    private boolean accountNonLocked;
-//    private boolean credentialsNonExpired;
+    private boolean accountNonExpired;
+    private boolean isEnabled;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Role> authorities;
+    private Set<Role> authorities = Set.of(Role.ROLE_CUSTOMER); // TODO : think here
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -47,7 +47,9 @@ public class User implements UserDetails {
     @ElementCollection
     private List<RestaurantDto> favorites;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
+
+
 
 }

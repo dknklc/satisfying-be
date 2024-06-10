@@ -5,11 +5,13 @@ spring:
   application:
     name: satisfying
   datasource:
-    url: jdbc:postgresql://localhost:5432/satisfyingDB
-    username: dekan
+    url: jdbc:mysql://localhost:3306/satisfyingDB
+    username: root
     password: s3cret
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
+jwt:
+  key: MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBs289VlRf5BAQ2sFpP6X0enXZQXr0hH701T1DQnK7AhFdgzKQcSMaVmQHvAiTejcDOYFyrNswa1Jw9kY8aJ3d1mr37vdKu9oVZH7KzPPbDjPyhtz82uyCa5yUxXvIHKPPWfX7nqJYDuhPk9qm3xircaL8XU1E63gDW6n75xE8rtdIqGX5uEuzwSpUKOvbsXr3ZuMuOvVmrWDz7YNeT0mFYFNtY0pCeVVLQ9v1YHGldEknHzFISYFWvALglEZ8yg5Yei2q1WUE8J0eOiTo0wgKzoIF43sWYuLq52WanyJuVteXKOWb5EW2pOhpCpaAJzq9gNPW98rAgMBAAE

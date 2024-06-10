@@ -1,20 +1,24 @@
 package com.dekankilic.satisfying.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-@Getter
-@RequiredArgsConstructor
 public enum Role implements GrantedAuthority {
-    ROLE_CUSTOMER,
-    ROLE_RESTAURANT_OWNER,
-    ROLE_ADMIN;
+    ROLE_CUSTOMER("CUSTOMER"),
+    ROLE_RESTAURANT_OWNER("RESTAURANT_OWNER"),
+    ROLE_ADMIN("ADMIN");
 
     private String value;
 
+    Role(String value){
+        this.value = value;
+    }
+
+    public String getValue(){
+        return this.value;
+    }
+
     @Override
     public String getAuthority() {
-        return null;
+        return name();
     }
 }
