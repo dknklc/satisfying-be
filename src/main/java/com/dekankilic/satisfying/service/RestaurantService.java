@@ -84,7 +84,20 @@ public class RestaurantService {
         restaurantDto.setTitle(restaurant.getName());
         restaurantDto.setImages(restaurant.getImages());
 
-        boolean b = user.getFavorites().contains(restaurantDto) ? user.getFavorites().remove(restaurantDto) : user.getFavorites().add(restaurantDto); // TODO: Check here later !!!
+        boolean isFavorite = false;
+        List<RestaurantDto> favorites = user.getFavorites();
+        for(RestaurantDto favorite : favorites){
+            if(favorite.getId().equals(restaurantId)){
+                isFavorite = true;
+                break;
+            }
+        }
+
+        if(isFavorite){
+            favorites.removeIf(favorite -> favorite.getId().equals(restaurantId));
+        } else{
+            favorites.add(restaurantDto);
+        }
 
         userRepository.save(user);
         return restaurantDto;
@@ -95,4 +108,6 @@ public class RestaurantService {
         restaurant.setOpen(!restaurant.isOpen());
         return restaurantRepository.save(restaurant);
     }
+
+    // 4:09:30
 }

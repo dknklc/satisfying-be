@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
-    @Query("SELECT R FROM Restaurant R WHERE lower(R.name) LIKE lower(concat('%', :query, '%')) OR lower(r.kitchenType) LIKE lower(concat('%', :query, '%'))") // TODO : Use Elasticsearch for searching restaurants and food later.
+    @Query(value = "SELECT R FROM Restaurant R WHERE lower(R.name) LIKE lower(concat('%', :query, '%')) OR lower(r.kitchenType) LIKE lower(concat('%', :query, '%'))", nativeQuery = true) // TODO : Use Elasticsearch for searching restaurants and food later.
     List<Restaurant> findBySearchQuery(String query);
 
     Optional<Restaurant> findByOwnerId(Long userId);

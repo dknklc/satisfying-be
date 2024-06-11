@@ -1,5 +1,6 @@
 package com.dekankilic.satisfying.security;
 
+import com.dekankilic.satisfying.model.Role;
 import com.dekankilic.satisfying.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,8 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers("/auth/register/**", "/auth/login/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER", "ADMIN")
+                        //.requestMatchers("/auth/register/**", "/auth/login/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasAnyRole(Role.ROLE_ADMIN.getValue(), Role.ROLE_RESTAURANT_OWNER.getValue())
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )

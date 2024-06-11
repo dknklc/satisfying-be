@@ -7,6 +7,8 @@ import com.dekankilic.satisfying.exception.UserNotFoundException;
 import com.dekankilic.satisfying.model.Cart;
 import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -63,5 +65,11 @@ public class UserService implements UserDetailsService {
                 .username(savedUser.getUsername())
                 .message("Successfully registered")
                 .build();
+    }
+
+    // This is newly added
+    public User getUserFromJwt(String jwt){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 }
