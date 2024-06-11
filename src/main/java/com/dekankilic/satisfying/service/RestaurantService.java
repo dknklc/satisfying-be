@@ -2,6 +2,7 @@ package com.dekankilic.satisfying.service;
 
 import com.dekankilic.satisfying.dto.CreateRestaurantRequest;
 import com.dekankilic.satisfying.dto.RestaurantDto;
+import com.dekankilic.satisfying.dto.RestaurantResponseDto;
 import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.mapper.RestaurantMapper;
 import com.dekankilic.satisfying.model.Address;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class RestaurantService {
     // private final UserService userService;
     private final UserRepository userRepository;
 
-    public Restaurant createRestaurant(CreateRestaurantRequest createRestaurantRequest, User user){
+    public RestaurantResponseDto createRestaurant(CreateRestaurantRequest createRestaurantRequest, User user){
 
         // First, save the address gathered from createRestaurantRequest
         Address address = addressService.saveAddress(createRestaurantRequest.address());
@@ -42,15 +44,18 @@ public class RestaurantService {
                 .build();
 
         // Then, save the restaurant constructed from createRestaurantRequest
-        return restaurantRepository.save(restaurant);
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+
+        // Then, map the Restaurant entity to RestaurantResponseDto and return it.
+        return RestaurantMapper.mapToRestaurantResponseDto(savedRestaurant);
     }
 
-    public Restaurant updateRestaurant(Long restaurantId, CreateRestaurantRequest request){
+    public RestaurantResponseDto updateRestaurant(Long restaurantId, CreateRestaurantRequest request){
         Restaurant restaurant = findRestaurantById(restaurantId);
         Restaurant willBeUpdated = RestaurantMapper.mapToRestaurant(request);
         willBeUpdated.setId(restaurantId);
-        restaurantRepository.save(willBeUpdated);
-        return willBeUpdated;
+        Restaurant savedRestaurant = restaurantRepository.save(willBeUpdated);
+        return RestaurantMapper.mapToRestaurantResponseDto(savedRestaurant);
     }
 
     public boolean deleteRestaurant(Long restaurantId){
@@ -59,12 +64,14 @@ public class RestaurantService {
         return true;
     }
 
-    public List<Restaurant> getAllRestaurants(){ // only an admin can get all restaurants' information
-        return restaurantRepository.findAll();
+    public List<RestaurantResponseDto> getAllRestaurants(){ // only an admin can get all restaurants' information
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        return restaurants.stream().map(RestaurantMapper::mapToRestaurantResponseDto).collect(Collectors.toList());
     }
 
-    public List<Restaurant> searchRestaurant(String keyword){
-        return restaurantRepository.findBySearchQuery(keyword);
+    public List<RestaurantResponseDto> searchRestaurant(String keyword){
+        List<Restaurant> restaurants =  restaurantRepository.findBySearchQuery(keyword);
+        return restaurants.stream().map(RestaurantMapper::mapToRestaurantResponseDto).collect(Collectors.toList());
     }
 
     public Restaurant findRestaurantById(Long restaurantId){
@@ -103,10 +110,11 @@ public class RestaurantService {
         return restaurantDto;
     }
 
-    public Restaurant updateRestaurantStatus(Long restaurantId) {
+    public RestaurantResponseDto updateRestaurantStatus(Long restaurantId) {
         Restaurant restaurant = findRestaurantById(restaurantId);
         restaurant.setOpen(!restaurant.isOpen());
-        return restaurantRepository.save(restaurant);
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+        return RestaurantMapper.mapToRestaurantResponseDto(savedRestaurant);
     }
 
     // 4:09:30

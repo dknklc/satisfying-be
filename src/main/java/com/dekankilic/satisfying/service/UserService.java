@@ -2,8 +2,8 @@ package com.dekankilic.satisfying.service;
 
 import com.dekankilic.satisfying.dto.AuthResponse;
 import com.dekankilic.satisfying.dto.RegisterRequest;
+import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.exception.UserAlreadyExistsException;
-import com.dekankilic.satisfying.exception.UserNotFoundException;
 import com.dekankilic.satisfying.model.Cart;
 import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.repository.UserRepository;
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
-        return user.orElseThrow(() -> new UserNotFoundException("User not found with given username: " + username));
+        return user.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
     }
 
     public Optional<User> getByUsername(String username){

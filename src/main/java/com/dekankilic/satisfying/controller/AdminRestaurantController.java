@@ -1,6 +1,7 @@
 package com.dekankilic.satisfying.controller;
 
 import com.dekankilic.satisfying.dto.CreateRestaurantRequest;
+import com.dekankilic.satisfying.dto.RestaurantResponseDto;
 import com.dekankilic.satisfying.model.Restaurant;
 import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.service.RestaurantService;
@@ -20,18 +21,18 @@ public class AdminRestaurantController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity<RestaurantResponseDto> createRestaurant(@RequestBody CreateRestaurantRequest request, @RequestHeader("Authorization") String jwt){
         User user = userService.getUserFromJwt(jwt);
-        Restaurant restaurant = restaurantService.createRestaurant(request, user);
+        RestaurantResponseDto restaurant = restaurantService.createRestaurant(request, user);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(restaurant);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Restaurant> updateRestaurant(@RequestBody CreateRestaurantRequest request, @RequestHeader("Authorization") String jwt, @PathVariable Long id){
+    public ResponseEntity<RestaurantResponseDto> updateRestaurant(@RequestBody CreateRestaurantRequest request, @RequestHeader("Authorization") String jwt, @PathVariable Long id){
         User user = userService.getUserFromJwt(jwt);
-        Restaurant restaurant = restaurantService.updateRestaurant(id, request);
+        RestaurantResponseDto restaurant = restaurantService.updateRestaurant(id, request);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(restaurant);
@@ -53,9 +54,9 @@ public class AdminRestaurantController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Restaurant> updateRestaurantStatus(@RequestHeader("Authorization") String jwt, @PathVariable Long id){
+    public ResponseEntity<RestaurantResponseDto> updateRestaurantStatus(@RequestHeader("Authorization") String jwt, @PathVariable Long id){
         User user = userService.getUserFromJwt(jwt);
-        Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
+        RestaurantResponseDto restaurant = restaurantService.updateRestaurantStatus(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(restaurant);
