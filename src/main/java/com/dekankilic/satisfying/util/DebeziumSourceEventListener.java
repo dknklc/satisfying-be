@@ -48,7 +48,6 @@ public class DebeziumSourceEventListener {
         this.outboxService = outboxService;
     }
 
-
     private void handleEvent(SourceRecord sourceRecord) {
 
         Struct sourceRecordValue = (Struct) sourceRecord.value();

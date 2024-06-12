@@ -13,6 +13,7 @@ import com.dekankilic.satisfying.repository.RestaurantRepository;
 import com.dekankilic.satisfying.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +29,7 @@ public class RestaurantService {
     private final UserRepository userRepository;
     private final RestaurantOutboxService restaurantOutboxService;
 
+    @Transactional
     public RestaurantResponseDto createRestaurant(CreateRestaurantRequest createRestaurantRequest, User user){
 
         // First, save the address gathered from createRestaurantRequest

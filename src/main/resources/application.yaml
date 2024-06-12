@@ -20,6 +20,12 @@ elasticsearch:
   url: localhost:9200
 
 
+logging:
+  level:
+    org:
+      springframework:
+        web: info
+
 
 
 

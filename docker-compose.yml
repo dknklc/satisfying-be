@@ -6,8 +6,8 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=outbox-pattern
+      - MYSQL_ROOT_PASSWORD=s3cret
+      - MYSQL_DATABASE=satisfyingDB
 
   kafka_connect:
     container_name: kafka_connect
