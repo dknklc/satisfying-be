@@ -5,6 +5,7 @@ import com.dekankilic.satisfying.dto.RestaurantDto;
 import com.dekankilic.satisfying.dto.RestaurantResponseDto;
 import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.mapper.RestaurantMapper;
+import com.dekankilic.satisfying.mapper.RestaurantOutboxConverter;
 import com.dekankilic.satisfying.model.Address;
 import com.dekankilic.satisfying.model.Restaurant;
 import com.dekankilic.satisfying.model.User;
@@ -25,6 +26,7 @@ public class RestaurantService {
     private final AddressService addressService;
     // private final UserService userService;
     private final UserRepository userRepository;
+    private final RestaurantOutboxService restaurantOutboxService;
 
     public RestaurantResponseDto createRestaurant(CreateRestaurantRequest createRestaurantRequest, User user){
 
@@ -46,7 +48,10 @@ public class RestaurantService {
         // Then, save the restaurant constructed from createRestaurantRequest
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
 
-        // Then, map the Restaurant entity to RestaurantResponseDto and return it.
+        // Then, save the outbox into the outbox table
+        restaurantOutboxService.saveOutbox(RestaurantOutboxConverter.convertToOutbox(savedRestaurant));
+
+        // Finally, map the Restaurant entity to RestaurantResponseDto and return it.
         return RestaurantMapper.mapToRestaurantResponseDto(savedRestaurant);
     }
 

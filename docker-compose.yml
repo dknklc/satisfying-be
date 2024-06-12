@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mysql-db:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=outbox-pattern
+
+  kafka_connect:
+    container_name: kafka_connect
+    image: debezium/connect
+    links:
+      - mysql-db
+    ports:
+      - '8083:8083'  # Kafka Connect REST API'ya disaridan erisim saglar.
+    environment:
+      - GROUP_ID=medium_debezium
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+
+  elasticsearch:
+    image: elasticsearch:8.12.2
+    environment:
+      - discovery.type=single-node
+      - validate_after_inactivity=0
+      - max_open_files=65536
+      - max_content_length_in_bytes=100000000
+      - transport.host=elasticsearch
+      - xpack.security.enabled=false
+    volumes:
+      - $HOME/app:/var/app
+    ports:
+      - "9200:9200"
+      - "9300:9300"

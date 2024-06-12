@@ -69,6 +69,29 @@
 			<version>0.11.5</version>
 		</dependency>
 
+		<!-- Debezium -->
+		<dependency>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-api</artifactId>
+			<version>2.3.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-embedded</artifactId>
+			<version>2.3.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-connector-mysql</artifactId>
+			<version>2.3.4.Final</version>
+		</dependency>
+
+		<!-- Elasticsearch -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>
+
 		<!-- TESTs -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
