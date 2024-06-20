@@ -1,7 +1,7 @@
 package com.dekankilic.satisfying.controller;
 
+import com.dekankilic.satisfying.dto.FoodDto;
 import com.dekankilic.satisfying.dto.request.CreateFoodRequest;
-import com.dekankilic.satisfying.model.Food;
 import com.dekankilic.satisfying.model.Restaurant;
 import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.service.FoodService;
@@ -21,7 +21,7 @@ public class AdminFoodController {
     private final RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest request, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity<FoodDto> createFood(@RequestBody CreateFoodRequest request, @RequestHeader("Authorization") String jwt){
         User user = userService.getUserFromJwt(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(request.restaurantId());
         return ResponseEntity
@@ -45,7 +45,7 @@ public class AdminFoodController {
     }
 
     @PatchMapping("/{id}/availability")
-    public ResponseEntity<Food> updateFoodAvailability(@PathVariable Long id, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity<FoodDto> updateFoodAvailability(@PathVariable Long id, @RequestHeader("Authorization") String jwt){
         User user = userService.getUserFromJwt(jwt);
         return ResponseEntity
                 .status(HttpStatus.OK)

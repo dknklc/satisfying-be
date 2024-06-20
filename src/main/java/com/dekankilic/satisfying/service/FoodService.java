@@ -1,5 +1,6 @@
 package com.dekankilic.satisfying.service;
 
+import com.dekankilic.satisfying.dto.FoodDto;
 import com.dekankilic.satisfying.dto.request.CreateFoodRequest;
 import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.mapper.FoodMapper;
@@ -18,14 +19,17 @@ import java.util.stream.Collectors;
 public class FoodService {
     private final FoodRepository foodRepository;
 
-    public Food createFood(CreateFoodRequest request, Category category, Restaurant restaurant){
+    public FoodDto createFood(CreateFoodRequest request, Category category, Restaurant restaurant){
+        // First, save the category
+
         Food food = FoodMapper.mapToFood(request);
         food.setFoodCategory(category);
         food.setRestaurant(restaurant);
 
         Food savedFood = foodRepository.save(food);
         restaurant.getFood().add(savedFood);
-        return savedFood;
+
+        return FoodMapper.mapToFoodDto(savedFood);
 
     }
 
@@ -36,7 +40,7 @@ public class FoodService {
         return true;
     }
 
-    public List<Food> getFoodOfRestaurant(Long restaurantId, boolean isVegetarian, boolean isSeasonal, String foodCategory){
+    public List<FoodDto> getFoodOfRestaurant(Long restaurantId, boolean isVegetarian, boolean isSeasonal, String foodCategory){
         List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
         if(isVegetarian){
             foods = foods.stream().filter(Food::isVegetarian).collect(Collectors.toList());
@@ -53,22 +57,24 @@ public class FoodService {
             }).collect(Collectors.toList());
         }
 
-        return foods;
+        return foods.stream().map(FoodMapper::mapToFoodDto).collect(Collectors.toList());
 
     }
 
-    public List<Food> searchFood(String keyword){
-        return foodRepository.searchFood(keyword);
+    public List<FoodDto> searchFood(String keyword){
+        List<Food> foods = foodRepository.searchFood(keyword);
+        return foods.stream().map(FoodMapper::mapToFoodDto).collect(Collectors.toList());
     }
 
     public Food findFoodById(Long id){
         return foodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Food", "foodId", id.toString()));
     }
 
-    public Food updateAvailabilityStatus(Long id){
+    public FoodDto updateAvailabilityStatus(Long id){
         Food food = findFoodById(id);
         food.setAvailable(!food.isAvailable());
-        return foodRepository.save(food);
+        Food savedFood = foodRepository.save(food);
+        return FoodMapper.mapToFoodDto(savedFood);
     }
 
 }
