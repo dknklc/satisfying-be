@@ -1,0 +1,49 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "U3ZtZi2jPurWSjg75HKSp",
+      "type": "text",
+      "x": 747,
+      "y": 157,
+      "width": 1621.23828125,
+      "height": 650,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a0",
+      "roundness": null,
+      "seed": 970762588,
+      "version": 2136,
+      "versionNonce": 2017737180,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1717933866907,
+      "link": null,
+      "locked": false,
+      "text": "Functionalities\n- Viewing top meals\n- Viewing all restaurants that are both open and closed\n- Viewing all details of a restaurant\n    - Vieweing all menus of a restaurant\n    - Filtering them based on both Food Type such as vegetarian, non-vegetarian, or seasonal and Food Category like pizza, burger, chicken\n    - \n- Adding restaurants to your favorite list, also removing them\n- Searching food\n- When ordering food, viewing and adding them into the food, then adding it to the cart\n- Adding address for delivery, and then as soon as clicking the delivery button, it redirects you to the stripe payment page\n- Vieweing your orders with status\n- Vieweing events that are announced by restaurants\n\n- In restaurant admin panel\n    - Vieweing all orders with current status\n    - Updating their status\n    - Filtering orders according to the status like pending, completed, delivered, all\n    - Vieweing all menus (also adding menu, but first you need to create food category and ingredient), and changing its availability so that a customer can buy it\n    - Vieweing food categories (also adding food category)\n    - Vieweing ingredients (also adding ingredient, but first you need to add ingredient category, then add the ingredient)\n\n- Registering as a restaurant owner\n    - after successfully registering, add a restaurant (create)\n    - Viewing the details of the restaurant\n    - Creating a new event such as 50% discount organized by a restaurant",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Functionalities\n- Viewing top meals\n- Viewing all restaurants that are both open and closed\n- Viewing all details of a restaurant\n    - Vieweing all menus of a restaurant\n    - Filtering them based on both Food Type such as vegetarian, non-vegetarian, or seasonal and Food Category like pizza, burger, chicken\n    - \n- Adding restaurants to your favorite list, also removing them\n- Searching food\n- When ordering food, viewing and adding them into the food, then adding it to the cart\n- Adding address for delivery, and then as soon as clicking the delivery button, it redirects you to the stripe payment page\n- Vieweing your orders with status\n- Vieweing events that are announced by restaurants\n\n- In restaurant admin panel\n    - Vieweing all orders with current status\n    - Updating their status\n    - Filtering orders according to the status like pending, completed, delivered, all\n    - Vieweing all menus (also adding menu, but first you need to create food category and ingredient), and changing its availability so that a customer can buy it\n    - Vieweing food categories (also adding food category)\n    - Vieweing ingredients (also adding ingredient, but first you need to add ingredient category, then add the ingredient)\n\n- Registering as a restaurant owner\n    - after successfully registering, add a restaurant (create)\n    - Viewing the details of the restaurant\n    - Creating a new event such as 50% discount organized by a restaurant",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}

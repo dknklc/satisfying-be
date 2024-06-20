@@ -124,5 +124,4 @@ public class RestaurantService {
         return RestaurantMapper.mapToRestaurantResponseDto(savedRestaurant);
     }
 
-    // 4:09:30
 }

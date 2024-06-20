@@ -2,16 +2,24 @@ package com.dekankilic.satisfying.util;
 
 import com.dekankilic.satisfying.service.RestaurantOutboxService;
 import io.debezium.config.Configuration;
+import io.debezium.embedded.Connect;
 import io.debezium.embedded.EmbeddedEngine;
+import io.debezium.engine.ChangeEvent;
+import io.debezium.engine.DebeziumEngine;
+import io.debezium.engine.RecordChangeEvent;
+import io.debezium.engine.format.ChangeEventFormat;
+import io.debezium.engine.format.Json;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.connect.source.SourceRecord;
+import org.apache.kafka.connect.source.SourceTask;
 import org.springframework.stereotype.Component;
 
 import org.apache.kafka.connect.data.Field;
 import org.apache.kafka.connect.data.Struct;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -20,12 +28,12 @@ import java.util.stream.Collectors;
 import static io.debezium.data.Envelope.FieldName.AFTER;
 import static io.debezium.data.Envelope.FieldName.OPERATION;
 
-@Component
+//@Component
 @Slf4j
 public class DebeziumSourceEventListener {
 
-    private final Executor executor = Executors.newSingleThreadExecutor();
-    private final EmbeddedEngine debeziumEngine;
+    private final Executor executor;
+    private final DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumEngine;
     private final RestaurantOutboxService outboxService;
 
     @PostConstruct
@@ -34,37 +42,27 @@ public class DebeziumSourceEventListener {
     }
 
     @PreDestroy
-    public void stop() {
-        if (debeziumEngine != null) {
-            debeziumEngine.stop();
+    public void stop() throws IOException {
+        if (this.debeziumEngine != null) {
+            this.debeziumEngine.close();
         }
     }
 
     public DebeziumSourceEventListener(Configuration configuration, RestaurantOutboxService outboxService) {
-        this.debeziumEngine = EmbeddedEngine.create()
-                .using(configuration)
-                .notifying(this::handleEvent)
+        this.executor = Executors.newSingleThreadExecutor();
+        this.debeziumEngine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
+                .using(configuration.asProperties())
+                .notifying(this::handleChangeEvent)
                 .build();
         this.outboxService = outboxService;
     }
 
-    private void handleEvent(SourceRecord sourceRecord) {
-
+    private void handleChangeEvent(RecordChangeEvent<SourceRecord> sourceRecordRecordChangeEvent){
+        SourceRecord sourceRecord = sourceRecordRecordChangeEvent.record();
+        Struct sourceRecordKey = (Struct) sourceRecord.key();
         Struct sourceRecordValue = (Struct) sourceRecord.value();
-        var crudOperation = (String) sourceRecordValue.get(OPERATION);
-
-        if (sourceRecordValue != null && (crudOperation == "c" || crudOperation == "u")) {
-            Struct struct = (Struct) sourceRecordValue.get(AFTER);
-
-            log.info(struct.toString());
-            // Call Elasticsearch's handleEvent method
-
-//            Struct struct = (Struct) sourceRecordValue.get(AFTER);
-//            Map<String, Object> payload = struct.schema().fields().stream()
-//                    .filter(field -> struct.get(field) != null)
-//                    .collect(Collectors.toMap(Field::name, field -> struct.get(field)));
-
-            // outboxService.debeziumDatabaseChange(payload);
-        }
+        log.info(sourceRecordKey.toString());
+        log.info(sourceRecordValue.toString());
     }
+
 }
