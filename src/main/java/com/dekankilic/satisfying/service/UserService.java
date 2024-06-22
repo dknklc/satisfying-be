@@ -7,6 +7,7 @@ import com.dekankilic.satisfying.exception.UserAlreadyExistsException;
 import com.dekankilic.satisfying.model.Cart;
 import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.repository.UserRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final CartService cartService;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, CartService cartService) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, @Lazy CartService cartService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.cartService = cartService;

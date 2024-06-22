@@ -18,9 +18,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FoodService {
     private final FoodRepository foodRepository;
+    private final CategoryService categoryService;
 
     public FoodDto createFood(CreateFoodRequest request, Category category, Restaurant restaurant){
         // First, save the category
+        List<Category> listOfCategories = categoryService.findCategoryByRestaurantId(restaurant.getId());
+        category.setRestaurant(restaurant);
+        if(!listOfCategories.contains(category))
+            categoryService.createCategory(category.getName(), restaurant.getOwner().getId());
 
         Food food = FoodMapper.mapToFood(request);
         food.setFoodCategory(category);
