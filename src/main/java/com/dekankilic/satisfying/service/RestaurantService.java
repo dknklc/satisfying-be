@@ -1,8 +1,8 @@
 package com.dekankilic.satisfying.service;
 
-import com.dekankilic.satisfying.dto.CreateRestaurantRequest;
+import com.dekankilic.satisfying.dto.request.CreateRestaurantRequest;
 import com.dekankilic.satisfying.dto.RestaurantDto;
-import com.dekankilic.satisfying.dto.RestaurantResponseDto;
+import com.dekankilic.satisfying.dto.response.RestaurantResponseDto;
 import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.mapper.RestaurantMapper;
 import com.dekankilic.satisfying.mapper.RestaurantOutboxConverter;

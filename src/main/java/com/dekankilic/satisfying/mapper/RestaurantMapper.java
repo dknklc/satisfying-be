@@ -1,7 +1,7 @@
 package com.dekankilic.satisfying.mapper;
 
-import com.dekankilic.satisfying.dto.CreateRestaurantRequest;
-import com.dekankilic.satisfying.dto.RestaurantResponseDto;
+import com.dekankilic.satisfying.dto.request.CreateRestaurantRequest;
+import com.dekankilic.satisfying.dto.response.RestaurantResponseDto;
 import com.dekankilic.satisfying.model.Restaurant;
 
 import java.time.LocalDateTime;

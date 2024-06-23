@@ -83,13 +83,14 @@ public class CartService {
         return cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", id.toString()));
     }
 
-    public Cart findCartByUserId(String jwt){
-        Long userId = userService.getUserFromJwt(jwt).getId();
-        return cartRepository.findByCustomerId(userId).orElseThrow(() -> new ResourceNotFoundException("Cart", "userId", userId.toString()));
+    public Cart findCartByUserId(Long userId){
+        Cart cart =  cartRepository.findByCustomerId(userId).orElseThrow(() -> new ResourceNotFoundException("Cart", "userId", userId.toString()));
+        cart.setTotal(calculateCartTotal(cart));
+        return cart;
     }
 
-    public Cart clearCart(String jwt){
-        Cart cart = findCartByUserId(jwt);
+    public Cart clearCart(Long userId){
+        Cart cart = findCartByUserId(userId);
         cart.getCartItems().clear();
 
         return cartRepository.save(cart);

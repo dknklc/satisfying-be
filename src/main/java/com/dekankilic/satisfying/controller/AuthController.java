@@ -1,9 +1,9 @@
 package com.dekankilic.satisfying.controller;
 
-import com.dekankilic.satisfying.dto.AuthResponse;
-import com.dekankilic.satisfying.dto.LoginResponse;
-import com.dekankilic.satisfying.dto.RegisterRequest;
-import com.dekankilic.satisfying.dto.LoginRequest;
+import com.dekankilic.satisfying.dto.response.AuthResponse;
+import com.dekankilic.satisfying.dto.response.LoginResponse;
+import com.dekankilic.satisfying.dto.request.RegisterRequest;
+import com.dekankilic.satisfying.dto.request.LoginRequest;
 import com.dekankilic.satisfying.service.CartService;
 import com.dekankilic.satisfying.service.JwtService;
 import com.dekankilic.satisfying.service.UserService;

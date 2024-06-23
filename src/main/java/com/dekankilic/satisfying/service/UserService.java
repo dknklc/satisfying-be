@@ -1,7 +1,7 @@
 package com.dekankilic.satisfying.service;
 
-import com.dekankilic.satisfying.dto.AuthResponse;
-import com.dekankilic.satisfying.dto.RegisterRequest;
+import com.dekankilic.satisfying.dto.response.AuthResponse;
+import com.dekankilic.satisfying.dto.request.RegisterRequest;
 import com.dekankilic.satisfying.exception.ResourceNotFoundException;
 import com.dekankilic.satisfying.exception.UserAlreadyExistsException;
 import com.dekankilic.satisfying.model.Cart;

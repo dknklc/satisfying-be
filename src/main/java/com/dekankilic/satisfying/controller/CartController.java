@@ -4,6 +4,7 @@ import com.dekankilic.satisfying.dto.request.AddCartItemRequest;
 import com.dekankilic.satisfying.dto.request.UpdateCartItemRequest;
 import com.dekankilic.satisfying.model.Cart;
 import com.dekankilic.satisfying.model.CartItem;
+import com.dekankilic.satisfying.model.User;
 import com.dekankilic.satisfying.service.CartService;
 import com.dekankilic.satisfying.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,17 +41,19 @@ public class CartController {
     }
 
     @PutMapping("/clear")
-    public ResponseEntity<Cart> updateCartItemQuantity(@RequestHeader("Authorization") String jwt){
+    public ResponseEntity<Cart> clearCart(@RequestHeader("Authorization") String jwt){
+        User user = userService.getUserFromJwt(jwt);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(cartService.clearCart(jwt));
+                .body(cartService.clearCart(user.getId()));
     }
 
     @GetMapping
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt){
+        User user = userService.getUserFromJwt(jwt);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(cartService.findCartByUserId(jwt));
+                .body(cartService.findCartByUserId(user.getId()));
     }
 
 }

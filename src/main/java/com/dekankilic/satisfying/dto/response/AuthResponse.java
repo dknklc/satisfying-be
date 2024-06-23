@@ -1,4 +1,4 @@
-package com.dekankilic.satisfying.dto;
+package com.dekankilic.satisfying.dto.response;
 
 import lombok.Builder;
 

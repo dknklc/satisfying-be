@@ -25,7 +25,7 @@ public class Order {
     private String orderStatus;
     private Date createdAt;
     private int totalItem;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     // private PaymentType paymentType; // add this later
 
