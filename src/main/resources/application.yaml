@@ -22,6 +22,9 @@ logging:
       springframework:
         web: info
 
+stripe:
+  api-key: your-secret-key
+
 
 
 
